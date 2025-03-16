@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0066ff">
     <title>Abinash Pradhan | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #0066ff;
@@ -15,399 +18,759 @@
             --light: #f8f9fa;
             --success: #28a745;
             --gradient-primary: linear-gradient(135deg, #0066ff 0%, #5e17eb 100%);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --card-border-radius: 16px;
+            --tag-bg: rgba(0, 102, 255, 0.1);
+            --border-color: rgba(0, 0, 0, 0.05);
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #212529;
         }
-        
+
+        .dark-mode {
+            --primary: #818cf8;
+            --primary-dark: #4a11c0;
+            --secondary: #cbd5e1;
+            --dark: #f1f5f9;
+            --light: #1e293b;
+            --background-color: #0f172a;
+            --card-background: #1e293b;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --text-color: #f1f5f9;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --tag-bg: rgba(129, 140, 248, 0.2);
+            --nav-bg: rgba(30, 41, 59, 0.9);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--light);
-            color: var(--dark);
+            background: var(--background-color);
+            color: var(--text-color);
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(0, 102, 255, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 100% 100%, rgba(94, 23, 235, 0.1) 0%, transparent 25%);
+            background-attachment: fixed;
+        }
+
+        .nav-header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .nav-header {
+            background: var(--nav-bg);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link-header {
+            font-weight: 500;
+            color: var(--text-color);
+            text-decoration: none;
+            position: relative;
+            padding: 0.5rem 0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .nav-link-header {
+            color: var(--text-color);
+        }
+
+        .nav-link-header::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link-header:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--tag-bg);
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 8rem 0 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: -3rem;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: var(--background-color);
+            transform: skewY(-3deg);
+        }
+
+        .animated-text-container {
+            display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            height: 5rem;
+            margin: 0;
+            position: relative;
+            z-index: 1;
         }
-        
+
+        .static-text {
+            font-size: 3.5rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .dynamic-text-wrapper {
+            font-size: 3.5rem;
+            font-weight: 700;
+            font-family: 'Dancing Script', cursive;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .dynamic-text {
+            position: relative;
+        }
+
+        .dynamic-text::after {
+            content: '|';
+            position: relative;
+            right: -4px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
         .container {
             max-width: 1140px;
             width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        
-        .profile-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            width: 380px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .profile-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-        
-        .header-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 40px;
-            background: var(--gradient-primary);
-            position: relative;
-            height: 180px;
-        }
-        
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 36px;
-            font-weight: 600;
-            color: var(--primary);
-            border: 5px solid white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 0 auto;
+            padding: 2rem;
             position: relative;
             z-index: 2;
         }
-        
+
+        .profile-card,
+        .content-section {
+            background: var(--card-background);
+            border-radius: var(--card-border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        .profile-card {
+            animation-delay: 0.2s;
+        }
+
+        .content-section {
+            animation-delay: 0.4s;
+        }
+
+        .profile-card:hover,
+        .content-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-section {
+            background: white;
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .dark-mode .header-section {
+            background: var(--card-background);
+        }
+
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            border: 4px solid white;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
         .profile-pic img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
-        .header-curve {
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 30px;
-            background: white;
-            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-            z-index: 1;
-        }
-        
-        .profile-content {
-            padding: 25px 30px 30px;
-            text-align: center;
-        }
-        
+
         .name {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--dark);
-        }
-        
-        .title {
-            font-size: 16px;
             color: var(--primary);
-            font-weight: 500;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
-        
-        .desc {
-            font-size: 15px;
+
+        .dark-mode .name {
+            color: var(--primary);
+        }
+
+        .title {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .dark-mode .title {
+            color: #f1f5f9;
+        }
+
+        .bio {
             color: var(--secondary);
-            margin-bottom: 25px;
-            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            padding: 0 1rem;
         }
-        
+
+        .dark-mode .bio {
+            color: #cbd5e1;
+        }
+
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 1rem;
         }
-        
+
         .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--tag-bg);
+            color: var(--primary);
             display: flex;
-            justify-content: center;
             align-items: center;
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: var(--light);
-            color: var(--dark);
+            justify-content: center;
             text-decoration: none;
-            font-size: 18px;
             transition: all 0.3s ease;
+            font-size: 1.2rem;
         }
-        
+
+        .dark-mode .social-btn {
+            background: var(--tag-bg);
+            color: var(--primary);
+        }
+
         .social-btn:hover {
             background: var(--primary);
             color: white;
             transform: translateY(-3px);
         }
-        
-        .nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            padding-top: 25px;
-        }
-        
-        .nav-link {
-            text-decoration: none;
-            color: var(--secondary);
-            font-size: 14px;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 100px;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link.active {
+
+        .dark-mode .social-btn:hover {
             background: var(--primary);
             color: white;
         }
-        
-        .nav-link:hover:not(.active) {
-            background: rgba(0, 102, 255, 0.1);
-            color: var(--primary);
-        }
-        
+
         .content-section {
-            flex: 1;
-            min-width: 300px;
-            max-width: 700px;
-            background: white;
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 2rem;
         }
-        
-        .content-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+        .skills-section {
+            margin-bottom: 2rem;
         }
-        
-        .section-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 4px;
-            background: var(--gradient-primary);
-            border-radius: 2px;
-        }
-        
-        .content-text {
-            font-size: 16px;
-            line-height: 1.7;
-            color: var(--secondary);
-        }
-        
-        .skill-tag {
-            display: inline-block;
-            padding: 6px 14px;
-            background: rgba(0, 102, 255, 0.1);
-            color: var(--primary);
-            border-radius: 100px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .tech-section {
-            margin-top: 20px;
-        }
-        
-        .tech-title {
-            font-size: 18px;
+
+        .skills-title {
+            font-size: 1.2rem;
             font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 10px;
-            margin-top: 20px;
+            margin-bottom: 1rem;
+            color: var(--text-color);
             display: flex;
             align-items: center;
+            gap: 0.5rem;
         }
-        
-        .tech-title i {
-            margin-right: 8px;
+
+        .skills-title i {
             color: var(--primary);
         }
-        
-        .cta-btn {
+
+        .skill-tag {
             display: inline-block;
-            padding: 12px 24px;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            border-radius: 8px;
-            margin-top: 25px;
+            padding: 0.5rem 1rem;
+            background: var(--tag-bg);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.25rem;
             transition: all 0.3s ease;
         }
-        
-        .cta-btn:hover {
-            background: var(--primary-dark);
+
+        .dark-mode .skill-tag {
+            background: var(--tag-bg);
+            color: var(--primary);
+        }
+
+        .skill-tag:hover {
+            background: var(--primary);
+            color: white;
             transform: translateY(-2px);
         }
-        
-        .footer {
-            text-align: center;
-            padding: 20px 0;
-            font-size: 14px;
-            color: var(--secondary);
-            width: 100%;
+
+        .dark-mode .skill-tag:hover {
+            background: var(--primary);
+            color: white;
         }
-        
+
+        .cta-container {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer {
+            background: var(--card-background);
+            padding: 4rem 0 2rem;
+            text-align: center;
+            color: var(--secondary);
+            border-top: 1px solid var(--border-color);
+            position: relative;
+            margin-top: auto;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .footer-content {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-text {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .footer-social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--tag-bg);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .footer-nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .footer-nav a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
-                flex-direction: column;
-                align-items: center;
+                grid-template-columns: 1fr;
+                padding: 1rem;
             }
-            
-            .profile-card, .content-section {
-                width: 100%;
-                max-width: 100%;
+
+            .header {
+                padding: 6rem 0 4rem;
             }
-            
-            .profile-card {
-                margin-bottom: 20px;
+
+            .static-text,
+            .dynamic-text-wrapper {
+                font-size: 2.5rem;
             }
-            
-            .content-section {
-                padding: 30px 20px;
+
+            .profile-pic {
+                width: 150px;
+                height: 150px;
             }
-            
-            .skill-tag {
-                margin-bottom: 8px;
+
+            .nav-right {
+                gap: 1.5rem;
+            }
+
+            .footer-nav {
+                flex-wrap: wrap;
+                gap: 1rem;
             }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
+    <nav class="nav-header">
+        <div class="nav-container">
+            <div class="nav-right">
+                <a href="https://abinashpradhan01.github.io/about/" class="nav-link-header">About</a>
+                <a href="https://abinashpradhan01.github.io/projects/" class="nav-link-header">Projects</a>
+                <a href="https://abinashpradhan01.github.io/blogs/" class="nav-link-header">Blog</a>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="header">
+        <div class="animated-text-container">
+            <span class="static-text">I am</span>
+            <div class="dynamic-text-wrapper">
+                <span class="dynamic-text"></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
         <div class="profile-card">
             <div class="header-section">
                 <div class="profile-pic">
                     <img src="photo.jpg" alt="Abinash Pradhan">
                 </div>
-                <div class="header-curve"></div>
-            </div>
-            <div class="profile-content">
                 <h1 class="name">Abinash Pradhan</h1>
                 <div class="title">ML Enthusiast</div>
-                <p class="desc">
-                    3rd-year undergraduate student pursuing Bachelor's in Data Science. Passionate about Machine Learning, Neural Networks, and Natural Language Processing.
-                </p>
+                <p class="bio">I came across ML by happenstance but I'm in love with it now and aspire to work on real
+                    world projects.</p>
                 <div class="social-links">
-                    <a href="https://github.com/abinashpradhan01" target="_blank" class="social-btn" aria-label="GitHub">
+                    <a href="https://github.com/abinashpradhan01" target="_blank" class="social-btn">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://in.linkedin.com/in/abinash-pradhan-a42157297" target="_blank" class="social-btn" aria-label="LinkedIn">
+                    <a href="https://in.linkedin.com/in/abinash-pradhan-a42157297" target="_blank" class="social-btn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="mailto:baijayantis56@gmail.com" class="social-btn" aria-label="Email">
+                    <a href="mailto:baijayantis56@gmail.com" class="social-btn">
                         <i class="far fa-envelope"></i>
                     </a>
-                    <a href="https://drive.google.com/uc?export=download&id=11aWTnq0darpT45eHM4mZjod8ol3UzHe2
-" target="_blank" class="social-btn" aria-label="Resume">
+                    <a href="https://drive.google.com/uc?export=download&id=11aWTnq0darpT45eHM4mZjod8ol3UzHe2"
+                        target="_blank" class="social-btn">
                         <i class="far fa-file-alt"></i>
                     </a>
                 </div>
-                <div class="nav">
-                    <a href="https://abinashpradhan01.github.io/" class="nav-link active">Home</a>
-                    <a href="https://abinashpradhan01.github.io/blogs/" class="nav-link">Blog</a>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="skills-section">
+                <h3 class="skills-title">
+                    <i class="fas fa-check-circle"></i>
+                    Skills
+                </h3>
+                <div>
+                    <span class="skill-tag">Machine Learning</span>
+                    <span class="skill-tag">Deep Learning</span>
+                    <span class="skill-tag">NLP</span>
+                    <span class="skill-tag">Data Analysis</span>
+                    <span class="skill-tag">Data Engineering</span>
+                </div>
+            </div>
+
+            <div class="skills-section">
+                <h3 class="skills-title">
+                    <i class="fas fa-code"></i>
+                    Languages
+                </h3>
+                <div>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">C++</span>
+                    <span class="skill-tag">R</span>
+                    <span class="skill-tag">SQL</span>
+                </div>
+            </div>
+
+            <div class="skills-section">
+                <h3 class="skills-title">
+                    <i class="fas fa-layer-group"></i>
+                    Frameworks & Libraries
+                </h3>
+                <div>
+                    <span class="skill-tag">NumPy</span>
+                    <span class="skill-tag">Pandas</span>
+                    <span class="skill-tag">PyTorch</span>
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">Scikit Learn</span>
+                    <span class="skill-tag">Matplotlib</span>
                 </div>
             </div>
         </div>
-        
-        <div class="content-section">
-            <h2 class="section-title">Welcome!</h2>
-            <p class="content-text">
-                Hello! I'm Abinash, a passionate explorer in the world of machine learning and AI. I’m learning how machines are trained to recognize patterns, understand language, and make decisions.
-            </p>
-            <p class="content-text" style="margin-top: 15px;">
-                Currently, I'm exploring NLP techniques and applications - everything from sentiment analysis to building conversational agents. The idea that computers can understand context and nuance in human communication fascinates me, and I'm constantly experimenting with new approaches and models.
-            </p>
-            
-            <h3 class="tech-title" style="margin-top: 30px;">
-                <i class="fas fa-check-circle"></i> Skills
-            </h3>
-            <div>
-                <span class="skill-tag">Machine Learning</span>
-                <span class="skill-tag">Deep Learning</span>
-                <span class="skill-tag">NLP</span>
-                <span class="skill-tag">Data Analysis</span>
-                <span class="skill-tag">Data Engineering</span>
-                <span class="skill-tag">Data Visualization</span>
+    </main>
+
+    <div class="cta-container">
+        <a href="https://abinashpradhan01.github.io/projects/" class="cta-btn">
+            Explore My Work <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">Always learning, always growing.</p>
+            <div class="footer-nav">
+                <a href="https://abinashpradhan01.github.io/about/">About</a>
+                <a href="https://abinashpradhan01.github.io/projects/">Projects</a>
+                <a href="https://abinashpradhan01.github.io/blogs/">Blog</a>
             </div>
-            
-            <h3 class="tech-title">
-                <i class="fas fa-code"></i> Languages
-            </h3>
-            <div>
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">Java</span>
-                <span class="skill-tag">C++</span>
-                <span class="skill-tag">R</span>
-                <span class="skill-tag">PHP</span>
+            <div class="footer-social">
+                <a href="https://github.com/abinashpradhan01" class="footer-social-link">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://in.linkedin.com/in/abinash-pradhan-a42157297" class="footer-social-link">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="mailto:baijayantis56@gmail.com" class="footer-social-link">
+                    <i class="far fa-envelope"></i>
+                </a>
             </div>
-            
-            <h3 class="tech-title">
-                <i class="fas fa-cube"></i> Frameworks & Libraries
-            </h3>
-            <div>
-                <span class="skill-tag">NumPy</span>
-                <span class="skill-tag">Pandas</span>
-                <span class="skill-tag">Seaborn</span>
-                <span class="skill-tag">PyTorch</span>
-                <span class="skill-tag">TensorFlow</span>
-                <span class="skill-tag">Scikit Learn</span>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Abinash Pradhan. All rights reserved.</p>
             </div>
-            
-            <h3 class="tech-title">
-                <i class="fas fa-globe"></i> Web Development
-            </h3>
-            <div>
-                <span class="skill-tag">HTML5</span>
-                <span class="skill-tag">CSS3</span>
-                <span class="skill-tag">JavaScript</span>
-                <span class="skill-tag">Flask</span>
-                <span class="skill-tag">Streamlit</span>
-                <span class="skill-tag">PHP</span>
-            </div>
-            
-            <a href="https://abinashpradhan01.github.io/projects/" class="cta-btn">View My Projects</a>
         </div>
-    </div>
-    
-    <div class="footer">
-        &copy; 2025 Abinash Pradhan. All rights reserved.
-    </div>
+    </footer>
+
+    <script>
+        // Theme Manager
+        class ThemeManager {
+            constructor() {
+                this.themeToggle = document.getElementById('theme-toggle');
+                this.body = document.body;
+                this.theme = localStorage.getItem('theme') || 'light';
+                this.init();
+            }
+
+            init() {
+                this.setTheme(this.theme);
+                this.themeToggle.addEventListener('click', () => this.toggleTheme());
+
+                if (!localStorage.getItem('theme')) {
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    if (prefersDark) this.setTheme('dark');
+                }
+
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                    if (!localStorage.getItem('theme')) {
+                        this.setTheme(e.matches ? 'dark' : 'light');
+                    }
+                });
+            }
+
+            toggleTheme() {
+                const newTheme = this.theme === 'light' ? 'dark' : 'light';
+                this.setTheme(newTheme);
+            }
+
+            setTheme(theme) {
+                this.theme = theme;
+                localStorage.setItem('theme', theme);
+                this.body.classList.toggle('dark-mode', theme === 'dark');
+                this.themeToggle.innerHTML = theme === 'dark'
+                    ? '<i class="fas fa-sun"></i>'
+                    : '<i class="fas fa-moon"></i>';
+            }
+        }
+
+        // Text Animator
+        class TextAnimator {
+            constructor() {
+                this.textArray = [
+                    "a Machine Learning Engineer",
+                    "an AI Engineer",
+                    "a Data Scientist",
+                    "a Deep Learning Enthusiast"
+                ];
+                this.typingDelay = 100;
+                this.erasingDelay = 50;
+                this.newTextDelay = 2000;
+                this.textArrayIndex = 0;
+                this.charIndex = 0;
+                this.textElement = document.querySelector(".dynamic-text");
+                this.init();
+            }
+
+            init() {
+                this.type();
+            }
+
+            type() {
+                if (this.charIndex < this.textArray[this.textArrayIndex].length) {
+                    this.textElement.textContent = this.textArray[this.textArrayIndex].substring(0, this.charIndex + 1);
+                    this.charIndex++;
+                    setTimeout(() => this.type(), this.typingDelay);
+                } else {
+                    setTimeout(() => this.erase(), this.newTextDelay);
+                }
+            }
+
+            erase() {
+                if (this.charIndex > 0) {
+                    this.textElement.textContent = this.textArray[this.textArrayIndex].substring(0, this.charIndex - 1);
+                    this.charIndex--;
+                    setTimeout(() => this.erase(), this.erasingDelay);
+                } else {
+                    this.textArrayIndex = (this.textArrayIndex + 1) % this.textArray.length;
+                    setTimeout(() => this.type(), this.typingDelay);
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const themeManager = new ThemeManager();
+            const textAnimator = new TextAnimator();
+        });
+    </script>
 </body>
+
 </html>
